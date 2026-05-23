@@ -77,5 +77,5 @@ contact(LinkedIn, https://www.linkedin.com/in/eli-corr-486847392/)
 endperson
 
 person(Tristan Schultz, people-media/tristan-schultz.jpg, "Co-founder of E-Town Rocket Bureau and ETHS's ARC program, engineered critical systems for Wildkit SRB MK3 (2025). Currently studying aerospace engineering at the University of Colorado, Boulder.")
-contact(LinkedIn, https://www.linkedin.com/in/eli-corr-486847392/)
+contact(LinkedIn, https://www.linkedin.com/in/tristan-schultz-54930428a/)
 endperson
