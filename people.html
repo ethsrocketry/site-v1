@@ -186,6 +186,18 @@
       font-size: 18px;
       line-height: 1.3;
     }
+    .person-class-year {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 0.5px solid var(--accent-border);
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      margin-top: -4px;
+      margin-bottom: 2px;
+    }
     .person-bio {
       font-family: var(--mono);
       font-size: 12px;
@@ -346,6 +358,7 @@
             name: args[0] || 'Unnamed person',
             image: args[1] || 'people-media/wip-square.svg',
             bio: args[2] || 'Bio coming soon.',
+            classYear: args[3] || '', // Captures the optional 4th parameter
             contacts: []
           };
           continue;
@@ -382,9 +395,16 @@
           const contacts = person.contacts.length
             ? person.contacts.map((contact) => `<a class="contact-link" href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(contact.method)}">${iconFor(contact.method)}</a>`).join('')
             : '<span style="font-family: var(--mono); font-size: 11px; color: var(--text-faint);">contact info coming soon</span>';
+          
+          // Render class badge conditionally if provided
+          const classBadgeHtml = person.classYear 
+            ? `<div class="person-class-year">${escapeHtml(person.classYear)}</div>` 
+            : '';
+
           return `<article class="person-card">
             <img class="person-photo" src="${escapeHtml(person.image)}" alt="Photo of ${escapeHtml(person.name)}" />
             <h3 class="person-name">${escapeHtml(person.name)}</h3>
+            ${classBadgeHtml}
             <p class="person-bio">${escapeHtml(person.bio)}</p>
             <div class="person-contacts">${contacts}</div>
           </article>`;
@@ -405,7 +425,7 @@
         .map((section) => {
           const filteredPeople = query
             ? section.people.filter((person) => {
-                const searchBlob = `${section.title} ${person.name} ${person.bio}`.toLowerCase();
+                const searchBlob = `${section.title} ${person.name} ${person.bio} ${person.classYear}`.toLowerCase();
                 return searchBlob.includes(query);
               })
             : section.people;
@@ -453,25 +473,4 @@
       const toggleBtn = document.getElementById('theme-toggle');
       if (!toggleBtn) return;
       const icon = toggleBtn.querySelector('.theme-toggle-icon');
-      const label = toggleBtn.querySelector('.theme-toggle-label');
-
-      function applyTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        toggleBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
-        if (icon) icon.textContent = theme === 'light' ? '☀️' : '🌙';
-        if (label) label.textContent = theme;
-      }
-
-      const savedTheme = localStorage.getItem(THEME_KEY);
-      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-      applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
-
-      toggleBtn.addEventListener('click', () => {
-        const nextTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        localStorage.setItem(THEME_KEY, nextTheme);
-        applyTheme(nextTheme);
-      });
-    })();
-  </script>
-</body>
-</html>
+      const label = toggleBtn.querySelector
