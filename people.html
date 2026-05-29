@@ -134,7 +134,69 @@
       box-shadow: 0 0 12px var(--accent-dim);
     }
 
-    .people-wrap { padding: 36px 40px 56px; display: flex; flex-direction: column; gap: 34px; }
+    /* Primary layout wrapper for Sidebar + Feed grid */
+    .people-layout-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1400px;
+      padding: 36px 40px 56px;
+    }
+    
+    /* Left Sticky Directory Navbar */
+    .people-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 94px; /* 58px header + padding */
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sidebar-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 0.5px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-decoration: none;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
+    .sidebar-link:hover {
+      color: var(--accent);
+      background: var(--surface);
+      border-color: var(--border);
+    }
+    .sidebar-link .badge {
+      font-size: 10px;
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 999px;
+      color: var(--text-faint);
+    }
+    .sidebar-link:hover .badge {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-dim);
+    }
+
+    /* Right contents wrapper */
+    .people-wrap { flex-grow: 1; display: flex; flex-direction: column; gap: 48px; }
+    .people-section { scroll-margin-top: 80px; } /* Clean stop space on link click anchor */
     .people-section h2 {
       font-size: 22px;
       margin-bottom: 16px;
@@ -156,9 +218,8 @@
     }
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 14px;
-      max-width: 1100px;
     }
     .person-card {
       background: var(--surface);
@@ -235,9 +296,14 @@
       font-size: 13px;
     }
 
-    @media (max-width: 700px) {
+    /* Fallback layout for mobile devices */
+    @media (max-width: 800px) {
+      .people-layout-container { flex-direction: column; gap: 24px; padding-left: 20px; padding-right: 20px; }
+      .people-sidebar { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .sidebar-title { width: 100%; margin-bottom: 0; }
+      .sidebar-link { padding: 6px 12px; }
       nav { padding: 0 20px; }
-      .page-header, .people-wrap { padding-left: 20px; padding-right: 20px; }
+      .page-header { padding-left: 20px; padding-right: 20px; }
       .nav-links { gap: 16px; }
     }
   </style>
@@ -285,7 +351,15 @@
     </div>
   </header>
 
-  <main class="people-wrap" id="people-content">Loading people data…</main>
+  <!-- Master Content Wrapper splitting sidebar layout -->
+  <div class="people-layout-container">
+    <aside class="people-sidebar" id="people-directory">
+      <div class="sidebar-title">Directory</div>
+      <!-- Links generated dynamically via JS script -->
+    </aside>
+
+    <main class="people-wrap" id="people-content">Loading people data…</main>
+  </div>
 
   <script>
     function escapeHtml(text) {
@@ -295,6 +369,13 @@
         .replaceAll('>', '&gt;')
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#039;');
+    }
+
+    // Helper safely converting names to matching standard HTML ID strings
+    function slugify(text) {
+      return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '');
     }
 
     function splitArgs(raw) {
@@ -358,7 +439,7 @@
             name: args[0] || 'Unnamed person',
             image: args[1] || 'people-media/wip-square.svg',
             bio: args[2] || 'Bio coming soon.',
-            classYear: args[3] || '', // Captures the optional 4th parameter
+            classYear: args[3] || '',
             contacts: []
           };
           continue;
@@ -387,16 +468,32 @@
       return `${count} entries`;
     }
 
+    // Builds the navigation index anchor list inside the left sidebar
+    function renderSidebar(sections) {
+      const sidebarContainer = document.getElementById('people-directory');
+      if (!sidebarContainer) return;
+
+      const linksHtml = sections.map(section => {
+        const targetId = slugify(section.title);
+        return `<a href="#${targetId}" class="sidebar-link">
+          <span>${escapeHtml(section.title)}</span>
+          <span class="badge">${section.people.length}</span>
+        </a>`;
+      }).join('');
+
+      sidebarContainer.innerHTML = '<div class="sidebar-title">Directory</div>' + linksHtml;
+    }
+
     function renderPeopleSections(sections) {
       if (!sections.length) return '<p class="no-results">No people data found.</p>';
 
       return sections.map((section) => {
+        const sectionId = slugify(section.title);
         const peopleHtml = section.people.map((person) => {
           const contacts = person.contacts.length
             ? person.contacts.map((contact) => `<a class="contact-link" href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(contact.method)}">${iconFor(contact.method)}</a>`).join('')
             : '<span style="font-family: var(--mono); font-size: 11px; color: var(--text-faint);">contact info coming soon</span>';
           
-          // Render class badge conditionally if provided
           const classBadgeHtml = person.classYear 
             ? `<div class="person-class-year">${escapeHtml(person.classYear)}</div>` 
             : '';
@@ -410,7 +507,8 @@
           </article>`;
         }).join('');
 
-        return `<section class="people-section">
+        // Attached unique section ID for anchoring links smoothly
+        return `<section class="people-section" id="${sectionId}">
           <h2>${escapeHtml(section.title)} <span class="section-count">${sectionCountLabel(section.title, section.totalCount)}</span></h2>
           <div class="people-grid">${peopleHtml}</div>
         </section>`;
@@ -440,6 +538,9 @@
       document.getElementById('people-content').innerHTML = filteredSections.length
         ? renderPeopleSections(filteredSections)
         : '<p class="no-results">No matching people entries found.</p>';
+
+      // Update sidebar links to reflect counts or hidden groups during searching
+      renderSidebar(filteredSections);
     }
 
     fetch('people_data.md')
@@ -473,4 +574,25 @@
       const toggleBtn = document.getElementById('theme-toggle');
       if (!toggleBtn) return;
       const icon = toggleBtn.querySelector('.theme-toggle-icon');
-      const label = toggleBtn.querySelector
+      const label = toggleBtn.querySelector('.theme-toggle-label');
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        toggleBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+        if (icon) icon.textContent = theme === 'light' ? '☀️' : '🌙';
+        if (label) label.textContent = theme;
+      }
+
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+
+      toggleBtn.addEventListener('click', () => {
+        const nextTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        localStorage.setItem(THEME_KEY, nextTheme);
+        applyTheme(nextTheme);
+      });
+    })();
+  </script>
+</body>
+</html>
