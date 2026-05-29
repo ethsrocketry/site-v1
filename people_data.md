@@ -19,8 +19,9 @@ person(Kevin Duffy, people-media/wip-square.svg, "Club facilitator and teacher."
 contact(Email, mailto:duffyk@eths202.org)
 endperson
 
-person(Prady Manur, people-media/wip-square.svg, "E-Town Rocket Bureau Co-founder and ARC 2026 chief and systems engineer working on organization architecture, GNC, and systems integration.", "Class of 2026")
+person(Prady Manur, people-media/pradyumna-manur.png, "E-Town Rocket Bureau Co-founder and ARC 2026 chief and systems engineer working on organization architecture, GNC, and systems integration.", "Class of 2026")
 contact(LinkedIn, https://www.linkedin.com/in/prady-m/)
+contact(Website, https://f15eagle.github.io/mysite/)
 endperson
 
 person(Peter Elbakian, people-media/wip-square.svg, "Lead structures engineer for Lil' Willy (2026) and Wildkit SRB MK3 (2025).", "Class of 2027")
