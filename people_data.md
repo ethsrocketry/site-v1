@@ -10,7 +10,7 @@
 // - For Email, use a mailto: link (example: mailto:name@example.com).
 // - Make sure to add quotes around the bio section. (example: "Willy the Wildkit is capable of creating general artificial intelligence but chooses not to")
 
-section(current members)
+section(club facilitators and teachers)
 person(Riley Fortune, people-media/wip-square.svg, "Club facilitator and teacher.")
 contact(Email, mailto:fortuner@eths202.org)
 endperson
@@ -19,11 +19,7 @@ person(Kevin Duffy, people-media/wip-square.svg, "Club facilitator and teacher."
 contact(Email, mailto:duffyk@eths202.org)
 endperson
 
-person(Prady Manur, people-media/pradyumna-manur.png, "E-Town Rocket Bureau Co-founder and ARC 2026 chief and systems engineer working on organization architecture, GNC, and systems integration.", "Class of 2026")
-contact(LinkedIn, https://www.linkedin.com/in/prady-m/)
-contact(Website, https://f15eagle.github.io/mysite/)
-endperson
-
+section(current members)
 person(Peter Elbakian, people-media/wip-square.svg, "Lead structures engineer for Lil' Willy (2026) and Wildkit SRB MK3 (2025).", "Class of 2027")
 contact(LinkedIn, https://www.linkedin.com/in/peter-elbakian-2a66453b0/)
 endperson
@@ -79,4 +75,9 @@ endperson
 
 person(Tristan Schultz, people-media/tristan-schultz.jpg, "Co-founder of E-Town Rocket Bureau and ETHS's ARC program, engineered critical systems for Wildkit SRB MK3 (2025). Currently studying aerospace engineering at the University of Colorado, Boulder.", "Class of 2025")
 contact(LinkedIn, https://www.linkedin.com/in/tristan-schultz-54930428a/)
+endperson
+
+person(Prady Manur, people-media/pradyumna-manur.png, "E-Town Rocket Bureau Co-founder and ARC 2026 chief and systems engineer working on organization architecture, GNC, and systems integration.", "Class of 2026")
+contact(LinkedIn, https://www.linkedin.com/in/prady-m/)
+contact(Website, https://f15eagle.github.io/mysite/)
 endperson
