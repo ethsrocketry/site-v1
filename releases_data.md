@@ -1,7 +1,7 @@
 ## Lil' Willy's First Flight
 - date: 2026-05-01
 - mode: embed
-- url: arc26-media/ARC Launch 1 Release.mp4
+- url: assets/arc-media/arc26-media/ARC Launch 1 Release.mp4
 ---
 Watch Lil' Willy's first flight.
 
