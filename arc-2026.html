@@ -164,23 +164,16 @@
     }
     .hero-img-wrap {
       position: relative;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 18px 30px 18px 18px;
+      min-height: 480px;
+      overflow: hidden;
     }
     .hero-img-wrap img {
-      width: min(100%, 620px);
-      max-height: 500px;
+      width: 100%;
       height: 100%;
-      object-fit: contain;
+      min-height: 480px;
+      object-fit: cover;
+      object-position: center;
       display: block;
-      animation: rocketWiggle 3s ease-in-out infinite;
-    }
-    @keyframes rocketWiggle {
-      0%, 100% { transform: translateX(0px) rotate(0deg); }
-      25% { transform: translateX(3px) rotate(0.5deg); }
-      50% { transform: translateX(-3px) rotate(-0.5deg); }
-      75% { transform: translateX(2px) rotate(0.3deg); }
     }
     .hero-img-caption {
       position: absolute; bottom: 12px;
@@ -443,12 +436,10 @@
         min-height: auto;
       }
       .hero-img-wrap {
-        padding: 24px;
-        max-width: 100%;
+        min-height: 300px;
       }
       .hero-img-wrap img {
-        max-width: 100%;
-        max-height: 300px;
+        min-height: 300px;
       }
       .hero-inner {
         padding: 48px 24px;
@@ -579,8 +570,8 @@
       </div>
     </div>
     <div class="hero-img-wrap">
-      <img src="assets/arc-media/arc26-media/full_assembly_render_1.png" alt="ARC 2026 full assembly render" />
-      <div class="hero-img-caption">Full assembly render</div>
+      <img src="assets/arc-media/arc26-media/Full_Rocket_Assembly_2 (1).jpg" alt="ARC 2026 rocket assembly banner" />
+      <div class="hero-img-caption">ARC 2026 assembly banner</div>
     </div>
   </section>
 

@@ -115,10 +115,28 @@
       background: var(--bg2);
     }
     .hero-inner {
-      width: min(860px, 100%);
+      width: min(960px, 100%);
       border: 0.5px solid var(--border);
       border-radius: 14px;
       background: rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+    .about-banner {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      min-height: 260px;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--border);
+      background: linear-gradient(135deg, var(--accent-dim), var(--gold-dim));
+    }
+    .about-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .hero-copy {
       padding: 34px;
     }
     .section-tag {
@@ -169,7 +187,8 @@
       nav { padding: 0 20px; }
       .nav-links { gap: 14px; }
       .member-pill { padding: 4px 10px; }
-      .hero-inner { padding: 24px; }
+      .hero-copy { padding: 24px; }
+      .about-banner { min-height: 220px; }
     }
 
 
@@ -263,19 +282,24 @@
 
   <main class="hero" aria-label="Rockets 4 Schools page">
     <section class="hero-inner">
-      <div class="section-tag">Rockets 4 Schools</div>
-      <h1>R4S page is currently <em>WIP.</em></h1>
-      <p class="wip-note">
-        We are actively building out this page for the Rockets4Schools rocket competition.
-        Soon this section will include this season's timeline, design targets, launch updates,
-        and media from build + flight day.
-      </p>
-      <ul class="status-list">
-        <li>Competition overview and requirements (in progress)</li>
-        <li>Vehicle configuration and testing log (in progress)</li>
-        <li>Team workflow, recovery, and flight recap (coming soon)</li>
-      </ul>
-      <div class="result-highlight">🏆 R4S placed 5th nationally in 2025</div>
+      <div class="about-banner">
+        <img src="assets/arc-media/arc26-media/Fully_Assembled_AV_Bay_2 (1).jpg" alt="Rocket avionics bay banner" />
+      </div>
+      <div class="hero-copy">
+        <div class="section-tag">Rockets 4 Schools</div>
+        <h1>R4S page is currently <em>WIP.</em></h1>
+        <p class="wip-note">
+          We are actively building out this page for the Rockets4Schools rocket competition.
+          Soon this section will include this season's timeline, design targets, launch updates,
+          and media from build + flight day.
+        </p>
+        <ul class="status-list">
+          <li>Competition overview and requirements (in progress)</li>
+          <li>Vehicle configuration and testing log (in progress)</li>
+          <li>Team workflow, recovery, and flight recap (coming soon)</li>
+        </ul>
+        <div class="result-highlight">🏆 R4S placed 5th nationally in 2025</div>
+      </div>
     </section>
   </main>
 
